@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+  <style>
+    h1 {
+      text-align: center;
+    }
+    canvas {
+      margin-left: 100px;
+    }
+    h3 {
+      padding-left: 130px;
+    }
+    span {
+      padding-left: 100px;
+    }
+    button {
+      border: 1px solid;
+      padding: 10px 20px;
+      float: right;
+      font-size: large;
+      box-shadow: 5px 5px;
+      margin-top: 10px;
+      margin-right: 390px;
+      margin-bottom: 30px;
+    }
+  </style>
+  <body>
+    <h1>Bubbles App using Canvas Js</h1>
+    <canvas
+      id="bubbleCanvas"
+      width="1000"
+      height="450"
+      style="border: 3px solid #d31919"
+    ></canvas
+    ><br />
+    <span
+      >Click on coloured bubbles to hit it with arrow<button onclick="reset()">
+        Reset
+      </button></span
+    >
+
+    <script>
+      var bubbleCanvas = document.getElementById("bubbleCanvas");
+      var bubble = bubbleCanvas.getContext("2d");
+
+      function createCircle(color, y) {
+        bubble.fillStyle = color;
+        bubble.beginPath();
+        bubble.arc(100, y, 40, 0, 2 * Math.PI);
+        bubble.fill();
+        bubble.stroke();
+      }
+      function createArrow(rectY, p1, p2, p3) {
+        bubble.fillStyle = "black";
+        bubble.fillRect(800, rectY, 100, 20); //YELLOW ARROW
+        bubble.beginPath();
+        bubble.moveTo(760, p1);
+        bubble.lineTo(800, p2);
+        bubble.lineTo(800, p3);
+        bubble.fill();
+      }
+      createCircle("yellow", 60);
+      createCircle("blue", 170);
+      createCircle("red", 280);
+      createCircle("green", 390);
+      createArrow(55, 65, 85, 45); //yellow circle
+      createArrow(165, 175, 195, 155); //blue circle
+      createArrow(275, 285, 305, 265); //red circle
+      createArrow(385, 395, 415, 375); //green circle
+
+      function reset() {
+        num1 = num2 = num3 = num4 = 0;
+        bubble.clearRect(0, 0, 1300, 530);
+        createCircle("yellow", 60);
+        createCircle("blue", 170);
+        createCircle("red", 280);
+        createCircle("green", 390);
+        createArrow(55, 65, 85, 45); //yellow circle
+        createArrow(165, 175, 195, 155); //blue circle
+        createArrow(275, 285, 305, 265); //red circle
+        createArrow(385, 395, 415, 375); //green circle
+      }
+
+      function movingArrow(arrowY, arcY, p1, p2, p3) {
+        let diff = 10;
+        const id = setInterval(() => {
+          bubble.fillStyle = "black";
+          bubble.clearRect(800 - diff, p3, 150, 100);
+          bubble.fillRect(800 - diff, arrowY, 100, 20);
+          bubble.beginPath();
+          bubble.moveTo(760 - diff, p1);
+          bubble.lineTo(800 - diff, p2);
+          bubble.lineTo(800 - diff, p3);
+          bubble.fill();
+          diff += 10;
+
+          if (diff > 620) {
+            bubble.clearRect(800 - diff, p3, 150, 10);
+            bubble.clearRect(800 - diff, p1 + 10, 150, 20);
+            bubble.fillStyle = "rgb(153,153,153)";
+            bubble.beginPath();
+            bubble.arc(100, arcY, 40, 0, 2 * Math.PI);
+            bubble.fill();
+            clearInterval(id);
+          }
+        }, 30);
+      }
+
+      let num1 = (num2 = num3 = num4 = 0);
+      bubbleCanvas.addEventListener("click", function (event) {
+        console.log(event);
+        if (
+          num1 == 0 &&
+          //Yellow circle hit
+          event.clientX >= 170 &&
+          event.clientX <= 250 &&
+          event.clientY >= 100 &&
+          event.clientY <= 180
+        ) {
+          movingArrow(55, 60, 65, 85, 45);
+          num1++;
+        }
+
+        if (
+          num2 == 0 &&
+          //Blue circle hit
+          event.clientX >= 170 &&
+          event.clientX <= 250 &&
+          event.clientY >= 215 &&
+          event.clientY <= 295
+        ) {
+          movingArrow(165, 170, 175, 195, 155);
+          num2++;
+        }
+
+        if (
+          num3 == 0 &&
+          //Red circle hit
+          event.clientX >= 170 &&
+          event.clientX <= 250 &&
+          event.clientY >= 325 &&
+          event.clientY <= 405
+        ) {
+          movingArrow(275, 280, 285, 305, 265);
+          num3++;
+        }
+
+        if (
+          num4 == 0 &&
+          //Green circle hit
+          event.clientX >= 170 &&
+          event.clientX <= 250 &&
+          event.clientY >= 430 &&
+          event.clientY <= 510
+        ) {
+          movingArrow(385, 390, 395, 415, 375);
+          num4++;
+        }
+      });
+    </script>
+  </body>
+</html>

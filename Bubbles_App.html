@@ -12,6 +12,7 @@
     }
     span {
       padding-left: 100px;
+      font-size: 20px;
     }
     button {
       border: 1px solid;
@@ -85,7 +86,7 @@
         let diff = 10;
         const id = setInterval(() => {
           bubble.fillStyle = "black";
-          bubble.clearRect(800 - diff, p3, 150, 100);
+          bubble.clearRect(800 - diff, p3, 110, 40);
           bubble.fillRect(800 - diff, arrowY, 100, 20);
           bubble.beginPath();
           bubble.moveTo(760 - diff, p1);
@@ -94,10 +95,8 @@
           bubble.fill();
           diff += 10;
 
-          if (diff > 620) {
-            bubble.clearRect(800 - diff, p3, 150, 10);
-            bubble.clearRect(800 - diff, p1 + 10, 150, 20);
-            bubble.fillStyle = "rgb(153,153,153)";
+          if (diff > 620) { //arrow hit bubble
+            bubble.fillStyle = "rgb(153,153,153)"; //color change to grey
             bubble.beginPath();
             bubble.arc(100, arcY, 40, 0, 2 * Math.PI);
             bubble.fill();
